@@ -1,3 +1,4 @@
+local awful = require("awful")
 local wibox = require("wibox")
 local beautiful = require('beautiful')
 
@@ -14,8 +15,12 @@ function widget.get_widget(widgets_args)
     local mute_color = args.mute_color or beautiful.fg_urgent
     local size = args.size or 18
     local icon_dir = args.icon_dir or ICON_DIR
+    local tooltip = args.tooltip or true
+    local use_mute_icon = args.use_mute_icon or false
 
-    return wibox.widget {
+    local current_value = 0
+
+    local volume_widget = wibox.widget {
         {
             id = "icon",
             image = icon_dir .. 'audio-volume-high-symbolic.svg',
@@ -32,15 +37,30 @@ function widget.get_widget(widgets_args)
         widget = wibox.container.arcchart,
         set_volume_level = function(self, new_value)
             self.value = new_value
+            current_value = tonumber(new_value)
         end,
         mute = function(self)
             self.colors = { mute_color }
+            if use_mute_icon then
+                self.icon.image = icon_dir .. 'audio-volume-muted-symbolic.svg'
+            end
         end,
         unmute = function(self)
             self.colors = { main_color }
+            self.icon.image = icon_dir .. 'audio-volume-high-symbolic.svg'
         end
     }
 
+    if tooltip then
+        awful.tooltip {
+            objects        = { volume_widget },
+            timer_function = function()
+                return current_value .. "%"
+            end,
+        }
+    end
+
+    return volume_widget
 end
 
 

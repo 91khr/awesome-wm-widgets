@@ -61,6 +61,7 @@ It is possible to customize the widget by providing a table with all or some of 
 | `widget_type`| `icon_and_text`| Widget type, one of `horizontal_bar`, `vertical_bar`, `icon`, `icon_and_text`, `arc` |
 | `device` | `pulse` | Select the device name to control |
 | `icon_dir`| `./icons`| Path to the folder with icons | 
+| `refresh_rate`| `1`| The timeout of refreshing by seconds | 
 
 Depends on the chosen widget type add parameters from the corresponding section below:
 
@@ -89,6 +90,8 @@ _Note:_ if you are changing icons, the folder should contain following .svg imag
 | `bg_color` | `#ffffff11` | Color of the arc's background |
 | `mute_color` | `beautiful.fg_urgent` | Color of the arc when mute |
 | `size` | 18 | Size of the widget |
+| `tooltip` | `true` | Display volume in a tooltip when the mouse cursor hovers the widget |
+| `use_mute_icon` | `false` | Whether use the mute icon when muted |
 
 #### `horizontal_bar` parameters
 
